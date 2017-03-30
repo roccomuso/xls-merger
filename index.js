@@ -1,22 +1,36 @@
-var argv = require('minimist')(process.argv.slice(2))
-var path = require('path')
-var readFile = require('./lib/readFile')
+const argv = require('minimist')(process.argv.slice(2))
+const path = require('path')
+const _ = require('lodash')
+const readXls = require('./lib/readXls')
 
 require('./lib/logo')()
 
 if (!argv.c || !argv._.length) throw Error('-c <column> param and filenames required.')
+if (argv._.length === 1) throw Error('Please provide 2 files at least.')
 
-// TODO.. parse from CLI
+var files = {}
+argv._.forEach(function(file){
+  files[file] = readXls(file)
+})
+console.log(Object.keys(files).length, 'files fetched')
 
-var fileA = readFile('test1.xls')
-var fileB = readFile('test2.xls')
 
-console.log('Rows:')
-console.log(fileA.length)
-console.log(fileB.length)
+for (var sheetName in files){
+  var sheet = files[sheetName]
+  // sheet[row][col]
+  var header = _.pullAt(sheet, [0]);
+  /* sheet has no header now */
+  
+  /* loop the rows */
+  //sheet.forEach(function(row, idx) { console.log(idx, row); })
+}
 
-var finalSheet = fileA.concat(fileB)
 
-console.log('Final Sheet # rows:', finalSheet.length)
 
-//XLSX.writeFile(workbook, 'out.xlsx');
+//console.log('Rows:')
+//console.log(fileA.length)
+//console.log(fileB.length)
+
+//var finalSheet = fileA.concat(fileB)
+
+//console.log('Final Sheet # rows:', finalSheet.length)
