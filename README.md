@@ -7,7 +7,7 @@ Node.js - Quick cli tool to merge XLS files and order by a given column.
 
 ## Usage
 
-    $ xls-merger -c <COLUMN> fileA.xls fileB.xls
+    $ xls-merger -c <COLUMN> fileA.xls fileB.xls <...>
 
 
 ### Coded for *Christine* :tada:, I hope this will come in handy.
